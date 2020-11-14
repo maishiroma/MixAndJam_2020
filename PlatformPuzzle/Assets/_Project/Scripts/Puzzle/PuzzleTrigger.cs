@@ -10,9 +10,12 @@
     public class PuzzleTrigger : MonoBehaviour
     {
         public string playerTag = "Player";
+        public Vector2 lookCameraAtPos;
+        
         public PuzzleMode associatedPuzzleMode;
+        public FollowPlayer mainCamera;
 
-        private Player.CharacterController playerController;
+        private Player.PlayerController playerController;
         private bool canToggleBetween;
         private InputControls controls;      // Ref to the controls input that we are using for the project
 
@@ -42,10 +45,11 @@
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.CompareTag(playerTag))
+            if (collision.CompareTag(playerTag) && canToggleBetween == false)
             {
                 canToggleBetween = true;
-                playerController = collision.GetComponent<Player.CharacterController>();
+                playerController = collision.GetComponent<Player.PlayerController>();
+                mainCamera.StartTransition(lookCameraAtPos);
             }
         }
 
@@ -55,6 +59,7 @@
             {
                 canToggleBetween = false;
                 playerController = null;
+                mainCamera.RevertBack();
             }
         }
 

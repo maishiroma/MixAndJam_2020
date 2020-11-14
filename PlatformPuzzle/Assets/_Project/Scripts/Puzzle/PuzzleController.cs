@@ -17,7 +17,7 @@
         private bool isFastFall;
         private float beforeFastFally;
 
-        private Player.CharacterController characterController;
+        private Player.PlayerController characterController;
 
         private Rigidbody2D currPiece;
         private PuzzleDetection pieceDetector;
@@ -60,7 +60,7 @@
         {
             movementInput = new Vector2();
 
-            characterController = gameObject.GetComponent<Player.CharacterController>();
+            characterController = gameObject.GetComponent<Player.PlayerController>();
         }
 
         private void GrabMovement(InputAction.CallbackContext ctx)

@@ -6,7 +6,7 @@
 
     public class PuzzleMode : MonoBehaviour
     {
-        private static Player.CharacterController characterController;
+        private static Player.PlayerController characterController;
 
         public Vector2 failZoneSize;
         public GameObject[] listOfPossiblePieces;
@@ -28,7 +28,7 @@
         {
             if(characterController == null)
             {
-                characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<Player.CharacterController>();
+                characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<Player.PlayerController>();
             }
         }
 

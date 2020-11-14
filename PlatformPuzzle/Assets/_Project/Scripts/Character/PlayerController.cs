@@ -6,7 +6,7 @@
     using UnityEngine;
     using UnityEngine.InputSystem;
     
-    public class CharacterController : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         public float moveSpeed;
         public float stopAcceeleration;

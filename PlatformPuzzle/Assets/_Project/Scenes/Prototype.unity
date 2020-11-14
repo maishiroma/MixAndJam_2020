@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!50 &21234609 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5972527858812565500, guid: d52a44c6c874ab144b54cb1828f23c1d, type: 3}
+  m_PrefabInstance: {fileID: 5972527858799719507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +139,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -149,6 +155,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e825a30fd505e4f8738182a32c8c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 21234609}
+  offset: {x: 3, y: 3}
+  currentState: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -335,7 +356,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309465461636945362, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.48
+      value: -3.37
       objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945362, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -381,6 +402,26 @@ PrefabInstance:
       propertyPath: associatedPuzzleMode
       value: 
       objectReference: {fileID: 1419286654}
+    - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 519420030}
+    - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
+      propertyPath: cameraOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
+      propertyPath: cameraOffset.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
+      propertyPath: lookCameraAtPos.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
+      propertyPath: lookCameraAtPos.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945365, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: m_Name
       value: PuzzleTrigger
@@ -394,6 +435,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5622499756467372458, guid: d52a44c6c874ab144b54cb1828f23c1d, type: 3}
+      propertyPath: jumpPower
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622499756467372458, guid: d52a44c6c874ab144b54cb1828f23c1d, type: 3}
+      propertyPath: gravitySpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622499756467372458, guid: d52a44c6c874ab144b54cb1828f23c1d, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5972527858812565474, guid: d52a44c6c874ab144b54cb1828f23c1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.11
