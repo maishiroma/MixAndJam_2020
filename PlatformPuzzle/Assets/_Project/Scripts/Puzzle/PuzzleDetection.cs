@@ -23,6 +23,8 @@
                 if (currTime > timeToStandStill)
                 {
                     isPlaced = true;
+                    pieceRB.isKinematic = true;
+                    pieceRB.velocity = Vector2.zero;
                 }
             }
         }

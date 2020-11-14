@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using Base;
+    using Puzzle;
     using UnityEngine;
     using UnityEngine.InputSystem;
     
@@ -14,12 +15,18 @@
         public float jumpDuration;
 
         public GroundDetector groundDetectors;
+        public PuzzleController puzzleControls;
 
         // Private Vars
         private Rigidbody2D playerRB;
         private Vector2 movementInput;
         private PlayerStates currentState;
         private InputControls controls;      // Ref to the controls input that we are using for the project
+
+        public PlayerStates CurrentState
+        {
+            get { return currentState; }
+        }
 
         // Activates all of the controls for the player
         private void Awake()
@@ -79,6 +86,7 @@
                 //AnimatePlayerMovement();
             }
         }
+
         private void GrabMovement(InputAction.CallbackContext ctx)
         {
             movementInput.x = moveSpeed * ctx.ReadValue<float>();
@@ -98,7 +106,31 @@
             yield return new WaitForSeconds(jumpDuration);
             movementInput.y = 0;
         }
+    
+        public void SwitchToPuzzleMode()
+        {
+            if(currentState == PlayerStates.PLATFORM)
+            {
+                playerRB.isKinematic = true;
+                playerRB.velocity = Vector2.zero;
 
+                currentState = PlayerStates.PUZZLE;
+                this.enabled = false;
+                puzzleControls.enabled = true;
+            }
+        }
+    
+        public void ReturnToPlatformMode()
+        {
+            if(currentState == PlayerStates.PUZZLE)
+            {
+                playerRB.isKinematic = false;
+
+                currentState = PlayerStates.PLATFORM;
+                this.enabled = true;
+                puzzleControls.enabled = false;
+            }
+        }
     }
 
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5972527858812565475}
   - component: {fileID: 5972527858812565500}
   - component: {fileID: 5972527858812565473}
+  - component: {fileID: 21234607}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -100,6 +101,23 @@ MonoBehaviour:
   gravitySpeed: 0.1
   jumpDuration: 0.1
   groundDetectors: {fileID: 5972527859565508387}
+  puzzleControls: {fileID: 21234607}
+--- !u!114 &21234607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972527858812565501}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0501172138e7fe4f8fcb78f1eaf39f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  stopAcceeleration: 5
+  fallSpeed: 0.01
+  fastFallSpeed: 1
 --- !u!1 &5972527859565508414
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +174,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.1}
+  m_Size: {x: 0.6, y: 0.1}
   m_EdgeRadius: 0
 --- !u!114 &5972527859565508387
 MonoBehaviour:
@@ -170,7 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d372b3cec1170649a8b37d14e81bef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTag: Ground
+  groundTags:
+  - Ground
+  - PuzzlePiece
   isGrounded: 0
 --- !u!1 &5972527859738267065
 GameObject:

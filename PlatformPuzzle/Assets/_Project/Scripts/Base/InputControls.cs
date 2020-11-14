@@ -37,7 +37,7 @@ namespace Base
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""PuzzleMode"",
+                    ""name"": ""PuzzleModeToggle"",
                     ""type"": ""Button"",
                     ""id"": ""2c4d2212-a939-47f7-a085-8d516edb5820"",
                     ""expectedControlType"": ""Button"",
@@ -130,7 +130,7 @@ namespace Base
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""PuzzleMode"",
+                    ""action"": ""PuzzleModeToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -141,7 +141,7 @@ namespace Base
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""PuzzleMode"",
+                    ""action"": ""PuzzleModeToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -171,6 +171,14 @@ namespace Base
                     ""name"": ""Rotate"",
                     ""type"": ""Button"",
                     ""id"": ""e1dd529b-4f54-4d6f-9ee3-102b5567efba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""HardReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f8c6bd8-b9e0-407f-862d-5d58d03a6648"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -275,6 +283,17 @@ namespace Base
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""921ec706-aae6-4285-9c19-26d0ad2ecba9"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HardReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -297,12 +316,13 @@ namespace Base
             m_Player_Platform = asset.FindActionMap("Player_Platform", throwIfNotFound: true);
             m_Player_Platform_Movement = m_Player_Platform.FindAction("Movement", throwIfNotFound: true);
             m_Player_Platform_Jump = m_Player_Platform.FindAction("Jump", throwIfNotFound: true);
-            m_Player_Platform_PuzzleMode = m_Player_Platform.FindAction("PuzzleMode", throwIfNotFound: true);
+            m_Player_Platform_PuzzleModeToggle = m_Player_Platform.FindAction("PuzzleModeToggle", throwIfNotFound: true);
             // Player_Puzzle
             m_Player_Puzzle = asset.FindActionMap("Player_Puzzle", throwIfNotFound: true);
             m_Player_Puzzle_Movement = m_Player_Puzzle.FindAction("Movement", throwIfNotFound: true);
             m_Player_Puzzle_FastFall = m_Player_Puzzle.FindAction("Fast Fall", throwIfNotFound: true);
             m_Player_Puzzle_Rotate = m_Player_Puzzle.FindAction("Rotate", throwIfNotFound: true);
+            m_Player_Puzzle_HardReset = m_Player_Puzzle.FindAction("HardReset", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -354,14 +374,14 @@ namespace Base
         private IPlayer_PlatformActions m_Player_PlatformActionsCallbackInterface;
         private readonly InputAction m_Player_Platform_Movement;
         private readonly InputAction m_Player_Platform_Jump;
-        private readonly InputAction m_Player_Platform_PuzzleMode;
+        private readonly InputAction m_Player_Platform_PuzzleModeToggle;
         public struct Player_PlatformActions
         {
             private @InputControls m_Wrapper;
             public Player_PlatformActions(@InputControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Player_Platform_Movement;
             public InputAction @Jump => m_Wrapper.m_Player_Platform_Jump;
-            public InputAction @PuzzleMode => m_Wrapper.m_Player_Platform_PuzzleMode;
+            public InputAction @PuzzleModeToggle => m_Wrapper.m_Player_Platform_PuzzleModeToggle;
             public InputActionMap Get() { return m_Wrapper.m_Player_Platform; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -377,9 +397,9 @@ namespace Base
                     @Jump.started -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnJump;
-                    @PuzzleMode.started -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleMode;
-                    @PuzzleMode.performed -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleMode;
-                    @PuzzleMode.canceled -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleMode;
+                    @PuzzleModeToggle.started -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
+                    @PuzzleModeToggle.performed -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
+                    @PuzzleModeToggle.canceled -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
                 }
                 m_Wrapper.m_Player_PlatformActionsCallbackInterface = instance;
                 if (instance != null)
@@ -390,9 +410,9 @@ namespace Base
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
-                    @PuzzleMode.started += instance.OnPuzzleMode;
-                    @PuzzleMode.performed += instance.OnPuzzleMode;
-                    @PuzzleMode.canceled += instance.OnPuzzleMode;
+                    @PuzzleModeToggle.started += instance.OnPuzzleModeToggle;
+                    @PuzzleModeToggle.performed += instance.OnPuzzleModeToggle;
+                    @PuzzleModeToggle.canceled += instance.OnPuzzleModeToggle;
                 }
             }
         }
@@ -404,6 +424,7 @@ namespace Base
         private readonly InputAction m_Player_Puzzle_Movement;
         private readonly InputAction m_Player_Puzzle_FastFall;
         private readonly InputAction m_Player_Puzzle_Rotate;
+        private readonly InputAction m_Player_Puzzle_HardReset;
         public struct Player_PuzzleActions
         {
             private @InputControls m_Wrapper;
@@ -411,6 +432,7 @@ namespace Base
             public InputAction @Movement => m_Wrapper.m_Player_Puzzle_Movement;
             public InputAction @FastFall => m_Wrapper.m_Player_Puzzle_FastFall;
             public InputAction @Rotate => m_Wrapper.m_Player_Puzzle_Rotate;
+            public InputAction @HardReset => m_Wrapper.m_Player_Puzzle_HardReset;
             public InputActionMap Get() { return m_Wrapper.m_Player_Puzzle; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -429,6 +451,9 @@ namespace Base
                     @Rotate.started -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnRotate;
+                    @HardReset.started -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnHardReset;
+                    @HardReset.performed -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnHardReset;
+                    @HardReset.canceled -= m_Wrapper.m_Player_PuzzleActionsCallbackInterface.OnHardReset;
                 }
                 m_Wrapper.m_Player_PuzzleActionsCallbackInterface = instance;
                 if (instance != null)
@@ -442,6 +467,9 @@ namespace Base
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
+                    @HardReset.started += instance.OnHardReset;
+                    @HardReset.performed += instance.OnHardReset;
+                    @HardReset.canceled += instance.OnHardReset;
                 }
             }
         }
@@ -459,13 +487,14 @@ namespace Base
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
-            void OnPuzzleMode(InputAction.CallbackContext context);
+            void OnPuzzleModeToggle(InputAction.CallbackContext context);
         }
         public interface IPlayer_PuzzleActions
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnFastFall(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
+            void OnHardReset(InputAction.CallbackContext context);
         }
     }
 }

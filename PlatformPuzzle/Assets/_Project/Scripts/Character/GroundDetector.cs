@@ -4,7 +4,7 @@
 
     public class GroundDetector : MonoBehaviour
     {
-        public string groundTag = "Ground";
+        public string[] groundTags = { "Ground" };
         
         [SerializeField]
         private bool isGrounded;
@@ -16,7 +16,7 @@
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if(collision.CompareTag(groundTag))
+            if(CheckTagArray(collision.gameObject.tag))
             {
                 isGrounded = true;
             }
@@ -24,10 +24,22 @@
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if(collision.CompareTag(groundTag))
+            if(CheckTagArray(collision.gameObject.tag))
             {
                 isGrounded = false;
             }
+        }
+
+        private bool CheckTagArray(string tagToCompare)
+        {
+            foreach(string currTag in groundTags)
+            {
+                if(tagToCompare == currTag)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

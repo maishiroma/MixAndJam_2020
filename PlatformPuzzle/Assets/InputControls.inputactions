@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "PuzzleMode",
+                    "name": "PuzzleModeToggle",
                     "type": "Button",
                     "id": "2c4d2212-a939-47f7-a085-8d516edb5820",
                     "expectedControlType": "Button",
@@ -115,7 +115,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "PuzzleMode",
+                    "action": "PuzzleModeToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -126,7 +126,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "PuzzleMode",
+                    "action": "PuzzleModeToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -156,6 +156,14 @@
                     "name": "Rotate",
                     "type": "Button",
                     "id": "e1dd529b-4f54-4d6f-9ee3-102b5567efba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "HardReset",
+                    "type": "Button",
+                    "id": "0f8c6bd8-b9e0-407f-862d-5d58d03a6648",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -258,6 +266,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "921ec706-aae6-4285-9c19-26d0ad2ecba9",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HardReset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

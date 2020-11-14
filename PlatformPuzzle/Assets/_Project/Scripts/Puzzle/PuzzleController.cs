@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using Base;
+    using Player;
     using UnityEngine;
     using UnityEngine.InputSystem;
 
@@ -15,6 +16,8 @@
         private Vector2 movementInput;
         private bool isFastFall;
         private float beforeFastFally;
+
+        private Player.CharacterController characterController;
 
         private Rigidbody2D currPiece;
         private PuzzleDetection pieceDetector;
@@ -34,7 +37,6 @@
             controls.Player_Puzzle.FastFall.canceled += ctx => FastFall(ctx);
 
             controls.Player_Puzzle.Rotate.started += ctx => Rotate(ctx);
-
         }
 
         // Enables the controls when the player is active
@@ -47,11 +49,18 @@
         private void OnDisable()
         {
             controls.Disable();
+            
+            currPiece = null;
+            pieceDetector = null;
+            isFastFall = false;
+            beforeFastFally = 0f;
         }
 
         private void Start()
         {
             movementInput = new Vector2();
+
+            characterController = gameObject.GetComponent<Player.CharacterController>();
         }
 
         private void GrabMovement(InputAction.CallbackContext ctx)
@@ -85,7 +94,7 @@
 
         private void FixedUpdate()
         {
-            if (currPiece != null)
+            if (currPiece != null && characterController.CurrentState == PlayerStates.PUZZLE)
             {
                 Vector2 velocityOverTime;
                 if (movementInput != Vector2.zero)
@@ -113,12 +122,6 @@
 
         public void AssignPiece(GameObject newPiece)
         {
-            if(currPiece != null)
-            {
-                currPiece.isKinematic = true;
-                currPiece.velocity = Vector2.zero;
-            }
-
             currPiece = newPiece.GetComponent<Rigidbody2D>();
             pieceDetector = newPiece.GetComponent<PuzzleDetection>();
         }
