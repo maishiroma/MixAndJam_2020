@@ -176,7 +176,7 @@
     
         public void ReturnToPlatformMode()
         {
-            if(currentState == PlayerStates.PUZZLE && groundDetectors.IsGrounded)
+            if(currentState == PlayerStates.PUZZLE)
             {
                 playerRB.isKinematic = false;
 

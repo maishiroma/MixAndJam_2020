@@ -75,16 +75,19 @@
 
         private void FastFall(InputAction.CallbackContext ctx)
         {
-            bool prevVal = isFastFall;
-            isFastFall = ctx.ReadValueAsButton();
+            if(currPiece != null) 
+            {
+                bool prevVal = isFastFall;
+                isFastFall = ctx.ReadValueAsButton();
 
-            if(prevVal == false && isFastFall == true)
-            {
-                beforeFastFally = currPiece.velocity.y;
-            }
-            else if(prevVal == true && isFastFall == false)
-            {
-                currPiece.velocity = new Vector2(currPiece.velocity.x, beforeFastFally);
+                if (prevVal == false && isFastFall == true)
+                {
+                    beforeFastFally = currPiece.velocity.y;
+                }
+                else if (prevVal == true && isFastFall == false)
+                {
+                    currPiece.velocity = new Vector2(currPiece.velocity.x, beforeFastFally);
+                }
             }
         }
 
