@@ -43,6 +43,14 @@ namespace Base
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResetLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""10492c32-9aa1-4578-8562-6dde6980478f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -142,6 +150,17 @@ namespace Base
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""PuzzleModeToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f9d4b95-bc88-475e-957c-eb5b2107e25a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetLevel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -317,6 +336,7 @@ namespace Base
             m_Player_Platform_Movement = m_Player_Platform.FindAction("Movement", throwIfNotFound: true);
             m_Player_Platform_Jump = m_Player_Platform.FindAction("Jump", throwIfNotFound: true);
             m_Player_Platform_PuzzleModeToggle = m_Player_Platform.FindAction("PuzzleModeToggle", throwIfNotFound: true);
+            m_Player_Platform_ResetLevel = m_Player_Platform.FindAction("ResetLevel", throwIfNotFound: true);
             // Player_Puzzle
             m_Player_Puzzle = asset.FindActionMap("Player_Puzzle", throwIfNotFound: true);
             m_Player_Puzzle_Movement = m_Player_Puzzle.FindAction("Movement", throwIfNotFound: true);
@@ -375,6 +395,7 @@ namespace Base
         private readonly InputAction m_Player_Platform_Movement;
         private readonly InputAction m_Player_Platform_Jump;
         private readonly InputAction m_Player_Platform_PuzzleModeToggle;
+        private readonly InputAction m_Player_Platform_ResetLevel;
         public struct Player_PlatformActions
         {
             private @InputControls m_Wrapper;
@@ -382,6 +403,7 @@ namespace Base
             public InputAction @Movement => m_Wrapper.m_Player_Platform_Movement;
             public InputAction @Jump => m_Wrapper.m_Player_Platform_Jump;
             public InputAction @PuzzleModeToggle => m_Wrapper.m_Player_Platform_PuzzleModeToggle;
+            public InputAction @ResetLevel => m_Wrapper.m_Player_Platform_ResetLevel;
             public InputActionMap Get() { return m_Wrapper.m_Player_Platform; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -400,6 +422,9 @@ namespace Base
                     @PuzzleModeToggle.started -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
                     @PuzzleModeToggle.performed -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
                     @PuzzleModeToggle.canceled -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnPuzzleModeToggle;
+                    @ResetLevel.started -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnResetLevel;
+                    @ResetLevel.performed -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnResetLevel;
+                    @ResetLevel.canceled -= m_Wrapper.m_Player_PlatformActionsCallbackInterface.OnResetLevel;
                 }
                 m_Wrapper.m_Player_PlatformActionsCallbackInterface = instance;
                 if (instance != null)
@@ -413,6 +438,9 @@ namespace Base
                     @PuzzleModeToggle.started += instance.OnPuzzleModeToggle;
                     @PuzzleModeToggle.performed += instance.OnPuzzleModeToggle;
                     @PuzzleModeToggle.canceled += instance.OnPuzzleModeToggle;
+                    @ResetLevel.started += instance.OnResetLevel;
+                    @ResetLevel.performed += instance.OnResetLevel;
+                    @ResetLevel.canceled += instance.OnResetLevel;
                 }
             }
         }
@@ -488,6 +516,7 @@ namespace Base
             void OnMovement(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnPuzzleModeToggle(InputAction.CallbackContext context);
+            void OnResetLevel(InputAction.CallbackContext context);
         }
         public interface IPlayer_PuzzleActions
         {

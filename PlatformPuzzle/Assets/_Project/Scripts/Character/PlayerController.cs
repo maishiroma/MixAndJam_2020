@@ -14,6 +14,15 @@
         public float gravitySpeed;
         public float jumpDuration;
 
+        public SpriteRenderer playerRenderer;
+        public Animator playerAnimations;
+
+        public AudioSource bgmPlayer;
+        public AudioSource sfxPlayer;
+        public SFXWrapper jumpSound;
+        public SFXWrapper clearLevelSound;
+        public SFXWrapper puzzleModeSound;
+
         public GroundDetector groundDetectors;
         public PuzzleController puzzleControls;
 
@@ -40,6 +49,8 @@
 
             controls.Player_Platform.Jump.started += ctx => Jump(ctx);
             controls.Player_Platform.Jump.canceled += ctx => Jump(ctx);
+
+            controls.Player_Platform.ResetLevel.started += ctx => ResetLevel(ctx);
         }
 
         // Enables the controls when the player is active
@@ -83,7 +94,36 @@
                 }
 
                 playerRB.velocity = velocityOverTime + gravityScale;
-                //AnimatePlayerMovement();
+            }
+
+            AnimatePlayerMovement();
+        }
+
+        private void AnimatePlayerMovement()
+        {
+            float currBlend = playerAnimations.GetFloat("Blend");
+            playerAnimations.SetBool("isGrounded", groundDetectors.IsGrounded);
+
+            if (movementInput.x == 0)
+            {
+                playerAnimations.SetFloat("Blend", (Mathf.Lerp(currBlend, 0, Time.deltaTime)));
+            }
+            else
+            {
+                playerAnimations.SetFloat("Blend", (Mathf.Lerp(currBlend, 1, Time.deltaTime)));
+                if (Mathf.Sign(movementInput.x) < 0)
+                {
+                    playerRenderer.flipX = true;
+                }
+                else
+                {
+                    playerRenderer.flipX = false;
+                }
+            }
+
+            if(movementInput.y > 0)
+            {
+                playerAnimations.SetBool("isJumping", true);
             }
         }
 
@@ -96,8 +136,18 @@
         {
             if (groundDetectors.IsGrounded && movementInput.y == 0)
             {
+                jumpSound.PlaySoundClip(sfxPlayer);
                 movementInput.y = jumpPower * ctx.ReadValue<float>();
                 StartCoroutine(ResetIsJumping());
+            }
+        }
+
+        private void ResetLevel(InputAction.CallbackContext ctx)
+        {
+            if(currentState == PlayerStates.PLATFORM)
+            {
+                // Restart level if player is stuck
+                GameManager.Instance.RestartLevel();
             }
         }
 
@@ -105,30 +155,54 @@
         {
             yield return new WaitForSeconds(jumpDuration);
             movementInput.y = 0;
+            playerAnimations.SetBool("isJumping", false);
         }
     
         public void SwitchToPuzzleMode()
         {
-            if(currentState == PlayerStates.PLATFORM)
+            if(currentState == PlayerStates.PLATFORM && groundDetectors.IsGrounded)
             {
                 playerRB.isKinematic = true;
                 playerRB.velocity = Vector2.zero;
 
+                playerAnimations.SetBool("inPuzzleMode", true);
                 currentState = PlayerStates.PUZZLE;
                 this.enabled = false;
                 puzzleControls.enabled = true;
+
+                puzzleModeSound.PlaySoundClip(sfxPlayer);
             }
         }
     
         public void ReturnToPlatformMode()
         {
-            if(currentState == PlayerStates.PUZZLE)
+            if(currentState == PlayerStates.PUZZLE && groundDetectors.IsGrounded)
             {
                 playerRB.isKinematic = false;
 
+                playerAnimations.SetBool("inPuzzleMode", false);
                 currentState = PlayerStates.PLATFORM;
                 this.enabled = true;
                 puzzleControls.enabled = false;
+            }
+        }
+   
+        public IEnumerator Advance(int nextLevel)
+        {
+            if(playerAnimations.GetBool("hasWon") == false)
+            {
+                bgmPlayer.Pause();
+                yield return null;
+
+                clearLevelSound.PlaySoundClip(sfxPlayer);
+                yield return new WaitForFixedUpdate();
+
+                currentState = PlayerStates.WON;
+                playerAnimations.SetBool("hasWon", true);
+                playerRB.velocity = Vector2.zero;
+
+                yield return new WaitForSeconds(2f);
+                GameManager.Instance.MoveToNextLevel(nextLevel);
             }
         }
     }

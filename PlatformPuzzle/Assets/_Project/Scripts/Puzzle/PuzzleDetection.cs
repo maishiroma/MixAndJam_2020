@@ -1,11 +1,16 @@
 ﻿namespace Puzzle
 {
     using UnityEngine;
+    using Base;
 
     public class PuzzleDetection : MonoBehaviour
     {
+        private static AudioSource sfxPlayer;
+
         public float timeToStandStill = 1f;
         public Rigidbody2D pieceRB;
+
+        public SFXWrapper landedSound;
 
         private bool isPlaced = false;
         private float currTime;
@@ -13,6 +18,14 @@
         public bool IsPlaced
         {
             get { return isPlaced; }
+        }
+
+        private void Awake()
+        {
+            if(sfxPlayer == null)
+            {
+                sfxPlayer = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
+            }
         }
 
         private void OnCollisionStay2D(Collision2D collision)
@@ -25,6 +38,8 @@
                     isPlaced = true;
                     pieceRB.isKinematic = true;
                     pieceRB.velocity = Vector2.zero;
+
+                    landedSound.PlaySoundClip(sfxPlayer);
                 }
             }
         }

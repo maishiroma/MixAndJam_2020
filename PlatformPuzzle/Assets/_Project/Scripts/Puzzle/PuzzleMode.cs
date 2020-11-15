@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using UnityEngine;
-    using Player;
+    using Base;
 
     public class PuzzleMode : MonoBehaviour
     {
@@ -11,6 +11,9 @@
         public Vector2 failZoneSize;
         public GameObject[] listOfPossiblePieces;
         public Transform spawnLocation;
+
+        public AudioSource sfxPlayer;
+        public SFXWrapper resetSound;
 
         [SerializeField]
         private bool hasFailed = false;
@@ -110,6 +113,8 @@
             {
                 ClearAllPieces();
             }
+
+            resetSound.PlaySoundClip(sfxPlayer);
         } 
 
         public GameObject GetNextPieceVisuals()
