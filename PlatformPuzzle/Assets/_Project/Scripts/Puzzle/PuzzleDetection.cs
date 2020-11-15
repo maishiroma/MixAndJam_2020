@@ -12,6 +12,8 @@
 
         public SFXWrapper landedSound;
 
+        public Sprite previewImage;
+
         private bool isPlaced = false;
         private float currTime;
 

@@ -467,3 +467,4 @@ MonoBehaviour:
   landedSound:
     soundClip: {fileID: 8300000, guid: 9eead2e5504919c45a8ebb069ff543ee, type: 3}
     soundVolume: 0.5
+  previewImage: {fileID: 21300000, guid: 140bdc54a3669d549a2a46bf9eb96f75, type: 3}

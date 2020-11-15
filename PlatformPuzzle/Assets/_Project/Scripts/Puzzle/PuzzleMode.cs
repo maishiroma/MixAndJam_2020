@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Base;
+    using UnityEngine.UI;
 
     public class PuzzleMode : MonoBehaviour
     {
@@ -11,6 +12,8 @@
         public Vector2 failZoneSize;
         public GameObject[] listOfPossiblePieces;
         public Transform spawnLocation;
+
+        public Image nextPiecePreview;
 
         public AudioSource sfxPlayer;
         public SFXWrapper resetSound;
@@ -38,6 +41,11 @@
         private void OnEnable()
         {
             hasFailed = false;
+        }
+
+        private void OnDisable()
+        {
+            nextPiecePreview.gameObject.SetActive(false);
         }
 
         private void Start()
@@ -83,6 +91,7 @@
             }
 
             nextPieceIndex = Random.Range(0, listOfPossiblePieces.Length);
+            SetPreviewImage();
 
             characterController.puzzleControls.AssignPiece(newPiece);
             allPlacedPieces.Add(newPiece);
@@ -115,15 +124,18 @@
             }
 
             resetSound.PlaySoundClip(sfxPlayer);
-        } 
+        }
 
-        public GameObject GetNextPieceVisuals()
+        private void SetPreviewImage()
         {
-            if(nextPieceIndex != -1)
+            if(nextPiecePreview.gameObject.activeInHierarchy == false)
             {
-                return listOfPossiblePieces[nextPieceIndex].transform.GetChild(0).gameObject;
+                nextPiecePreview.gameObject.SetActive(true);
             }
-            return null;
+
+            PuzzleDetection futurePiece = listOfPossiblePieces[nextPieceIndex].GetComponentInChildren<PuzzleDetection>();
+
+            nextPiecePreview.sprite = futurePiece.previewImage;
         }
     }
 

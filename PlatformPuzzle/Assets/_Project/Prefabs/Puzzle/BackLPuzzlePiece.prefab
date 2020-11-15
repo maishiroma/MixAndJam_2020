@@ -302,6 +302,7 @@ MonoBehaviour:
   landedSound:
     soundClip: {fileID: 8300000, guid: 9eead2e5504919c45a8ebb069ff543ee, type: 3}
     soundVolume: 0.5
+  previewImage: {fileID: 21300000, guid: 5545b067d3b131140ae2f8cbc1eee390, type: 3}
 --- !u!1 &5044276811791932120
 GameObject:
   m_ObjectHideFlags: 0

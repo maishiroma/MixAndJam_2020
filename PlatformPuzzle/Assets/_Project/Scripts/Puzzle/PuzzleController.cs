@@ -13,6 +13,8 @@
         public float fallSpeed;
         public float fastFallSpeed;
 
+        public GameObject puzzleModeUI;
+
         private Vector2 movementInput;
         private bool isFastFall;
         private float beforeFastFally;
@@ -43,13 +45,16 @@
         private void OnEnable()
         {
             controls.Enable();
+
+            puzzleModeUI.SetActive(true);
         }
 
         // Diables the controls when the player is not active
         private void OnDisable()
         {
             controls.Disable();
-            
+
+            puzzleModeUI.SetActive(false);
             currPiece = null;
             pieceDetector = null;
             isFastFall = false;
