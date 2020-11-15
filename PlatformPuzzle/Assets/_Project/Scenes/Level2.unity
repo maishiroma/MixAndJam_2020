@@ -367,7 +367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: lookCameraAtPos.y
-      value: -4
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945365, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: m_Name
@@ -18196,7 +18196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945364, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: lookCameraAtPos.y
-      value: -4
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5309465461636945365, guid: 38cec28063e2a1f4abd9dba403c6c5d2, type: 3}
       propertyPath: m_Name
