@@ -14,19 +14,25 @@
             get { return isGrounded; }
         }
 
-        private void OnTriggerStay2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(CheckTagArray(collision.gameObject.tag))
+            if(isGrounded == false)
             {
-                isGrounded = true;
+                if (CheckTagArray(collision.gameObject.tag))
+                {
+                    isGrounded = true;
+                }
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if(CheckTagArray(collision.gameObject.tag))
+            if (isGrounded == true)
             {
-                isGrounded = false;
+                if (CheckTagArray(collision.gameObject.tag))
+                {
+                    isGrounded = false;
+                }
             }
         }
 

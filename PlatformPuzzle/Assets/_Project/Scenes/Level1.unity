@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 418402560}
-  offset: {x: 3, y: 3.5}
+  offset: {x: 3, y: 1.5}
   currentState: 0
 --- !u!1 &415226620
 GameObject:
